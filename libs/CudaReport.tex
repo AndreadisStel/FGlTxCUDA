@@ -1,0 +1,22 @@
+\documentclass{report}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\author{Stylianos Andreadis\\andreads@ece.auth.gr}
+\title{Accelarate FGlT with CUDA}
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Introduction}
+\section{Abstract}
+FGlT is a C/C++ multi-threading library for Fast Graphlet Transform of large, sparse, undirected networks/graphs.\\
+The graphlets, shown in Table 1, are used as encoding elements to capture topological connectivity quantitatively and transform a graph G=(V,E) into a |V| x 16 array of graphlet frequencies at all vertices. The 16-element vector at each vertex represents the frequencies of induced subgraphs, incident at the vertex, of the graphlet patterns. The transformed data array serves multiple types of network analysis: statistical or/and topological measures, comparison, classification, modeling, feature embedding, and dynamic variation, among others. The library FGlT is distinguished in the following key aspects. (1) It is based on the fast, sparse, and exact transform formulas, which are of the lowest time and space complexities among known algorithms, and, at the same time, in a ready form for globally streamlined computation in matrix-vector operations. (2) It leverages prevalent multi-core processors, with multi-threaded programming in Cilk, and uses sparse graph computation techniques to deliver high-performance network analysis to individual laptops or desktop computers. (3) It has Python, Julia, and MATLAB interfaces for easy integration with, and extension of, existing network analysis software.\\
+More details in the \href{https://arxiv.org/abs/2007.11111}{paper}.
+
+
+
+
+
+\end{document}
