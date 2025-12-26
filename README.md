@@ -42,7 +42,7 @@ The CUDA implementation demonstrates significant speedups, particularly for the 
 
 ## How to Run
 
-[cite_start]The source code includes both Sequential and Parallel branches[cite: 46].
+The source code includes both Sequential and Parallel branches.
 
 ### 1. Sequential Build
 To compile and run the standard C implementation:
