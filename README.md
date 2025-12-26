@@ -5,7 +5,7 @@ This project focuses on accelerating the **Fast Graphlet Transform (FGIT)** libr
 
 FGIT is a C/C++ multi-threading library designed for the Fast Graphlet Transform of large, sparse, undirected networks. It uses a dictionary of graphlets to capture topological connectivity quantitatively and transforms a graph $G=(V,E)$ into a $|V|\times16$ array of graphlet frequencies at all vertices.
 
-More details on this [paper](https://arxiv.org/abs/2007.11111) or via [Github FGLT repository](https://github.com/fcdimitr/fglt).
+More details on this [paper](https://arxiv.org/abs/2007.11111) or via [Github](https://github.com/fcdimitr/fglt).
 
 ## Objective
 The primary objective of this project is to implement the calculation of specific [graphlet frequencies](https://raw.githubusercontent.com/fcdimitr/fglt/master/figs/table-overview.png) ($\sigma_1, \sigma_2, \sigma_3, \sigma_4$) using CUDA to parallelize the FGIT code on the GPU.
