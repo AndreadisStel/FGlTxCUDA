@@ -8,12 +8,12 @@ FGIT is a C/C++ multi-threading library designed for the Fast Graphlet Transform
 More details on this [paper](https://arxiv.org/abs/2007.11111) or via [Github FGLT repository](https://github.com/fcdimitr/fglt).
 
 ## Objective
-The primary objective of this project is to implement the calculation of specific graphlet frequencies ($\sigma_1, \sigma_2, \sigma_3, \sigma_4$) using CUDA to parallelize the FGIT code on the GPU.
+The primary objective of this project is to implement the calculation of specific [graphlet frequencies](https://raw.githubusercontent.com/fcdimitr/fglt/master/figs/table-overview.png) ($\sigma_1, \sigma_2, \sigma_3, \sigma_4$) using CUDA to parallelize the FGIT code on the GPU.
 
 ## Implementation Details
 
 ### Data Handling
-* **Input Format:** Graphs are sourced from the SuiteSparse Matrix Collection in Matrix Market (`.mtx`) COO format.
+* **Input Format:** Graphs are sourced from the [SuiteSparse Matrix Collection](https://sparse.tamu.edu) in [Matrix Market](https://math.nist.gov/MatrixMarket/formats.html) (`.mtx`) COO [format](https://en.wikipedia.org/wiki/Sparse_matrix).
 * **Format Conversion:** The code converts COO data to **CSR (Compressed Sparse Row)** format via the `coo_to_csr` function to allow for faster matrix access.
 * **Undirected Graph Logic:** To ensure the CSR format is correct for undirected graphs, the "COO edges" are read both forwards and backwards.
 
