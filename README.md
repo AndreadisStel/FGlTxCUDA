@@ -1,31 +1,30 @@
 # Accelerate FGIT with CUDA
 
 ## Overview
-[cite_start]This project focuses on accelerating the **Fast Graphlet Transform (FGIT)** library using NVIDIA's CUDA parallel computing platform[cite: 1, 16]. 
+This project focuses on accelerating the **Fast Graphlet Transform (FGIT)** library using NVIDIA's CUDA parallel computing platform. 
 
-[cite_start]FGIT is originally a C/C++ multi-threading library designed for the Fast Graphlet Transform of large, sparse, undirected networks[cite: 6]. [cite_start]It uses a dictionary of graphlets to quantitatively capture topological connectivity and transform a graph $G=(V,E)$ into a $|V|\times16$ array of graphlet frequencies[cite: 7, 8].
+FGIT is a C/C++ multi-threading library designed for the Fast Graphlet Transform of large, sparse, undirected networks. It uses a dictionary of graphlets to capture topological connectivity quantitatively and transforms a graph $G=(V,E)$ into a $|V|\times16$ array of graphlet frequencies at all vertices.
 
 ## Objective
-[cite_start]The main goal of this project is to implement the calculation of the graphlet frequencies $\sigma_1, \sigma_2, \sigma_3, \sigma_4$ (from the FGIT dictionary) on the GPU to achieve significant performance speedups compared to the sequential implementation[cite: 16].
+The primary objective of this project is to implement the calculation of specific graphlet frequencies ($\sigma_1, \sigma_2, \sigma_3, \sigma_4$) using CUDA to parallelize the FGIT code on the GPU.
 
 ## Implementation Details
 
 ### Data Handling
-* [cite_start]**Input Format:** The code accepts graphs from the SuiteSparse Matrix Collection in Matrix Market (`.mtx`) COO format[cite: 19].
-* [cite_start]**Preprocessing:** To optimize data access, the input is converted from COO to **CSR (Compressed Sparse Row)** format[cite: 20]. 
-* [cite_start]**Symmetry Handling:** Since the input files often list edges only once, the conversion process reads edges both forwards and backwards to correctly represent the undirected graph in CSR format[cite: 22, 23].
+* **Input Format:** Graphs are sourced from the SuiteSparse Matrix Collection in Matrix Market (`.mtx`) COO format.
+* **Format Conversion:** The code converts COO data to **CSR (Compressed Sparse Row)** format via the `coo_to_csr` function to allow for faster matrix access.
+* **Undirected Graph Logic:** To ensure the CSR format is correct for undirected graphs, the "COO edges" are read both forwards and backwards.
 
 ### Algorithm Logic
-The project implements parallel calculations for the following graphlet frequencies:
-* [cite_start]**$\sigma_1$**: Represents the edge count of each node, obtained by subtracting CSR pointers[cite: 25, 26].
-* **$\sigma_2$**: Calculated using the number of "children" nodes, summing them up, and subtracting the "children" of the "parent" node[cite: 27, 28].
-* **$\sigma_3$**: Involves calculations utilizing the Hadamard product[cite: 30].
-* **$\sigma_4$**: The most complex calculation involving $A^2$. [cite_start]Optimization is achieved by only calculating non-zero spots on the original matrix $A$ (as zero spots remain zero) and taking the half-sum of each row[cite: 31, 32, 33].
+The project parallelizes the following calculations:
+* **$\sigma_1$**: The vector of edge counts for each node, calculated by subtracting CSR pointers.
+* **$\sigma_2$**: Calculated using the $Ap1 - p1$ formula. To avoid matrix-vector multiplication, the code sums the "children" of a node and subtracts the count of the "parent" node.
+* **$\sigma_3$**: Calculated using the Hadamard product.
+* **$\sigma_4$**: The most complex frequency. To avoid full Matrix-Matrix multiplication ($A^2$), the code only calculates non-zero spots present in the original matrix $A$ and takes the half-sum of each row.
 
-### CUDA Acceleration strategy
-* [cite_start]**Parallelization:** `for` loops are replaced by spawning blocks of threads on the GPU to handle smaller workloads in parallel[cite: 35].
-* **Memory Management:** Memory is explicitly split between device (GPU) and host (CPU)[cite: 36].
-* [cite_start]**Functions:** Core formula functions are converted to `__global__` functions callable by the GPU[cite: 36].
+### CUDA Acceleration Strategy
+* **Parallelization:** Instead of sequential `for` loops, the program spawns blocks of threads on the GPU.
+* **Memory Management:** Memory is split into Host (CPU) and Device (GPU) memory, with core formulas converted into `__global__` functions.
 
 ## Performance Results
 The CUDA implementation demonstrates significant speedups, particularly for the parallelized portion of the code ($\sigma_1$ - $\sigma_4$ calculation).
@@ -39,7 +38,7 @@ The CUDA implementation demonstrates significant speedups, particularly for the 
 | **coPapersDBLP** | 14.10s (16.65s) | 0.9s (3.17s) | x5.25 | x15.67 |
 | **com-Orkut** | >12min | 107s (129s) | - | - |
 
-[cite_start]*Times formatted as: Calculation Time (Total Run Time)[cite: 38, 41].*
+*Times formatted as: Calculation Time (Total Run Time).
 
 ## How to Run
 
