@@ -50,3 +50,10 @@ To compile and run the standard C implementation:
 ```bash
 gcc src/serial.c -o bin/serial
 ./bin/serial [MatrixMarket.mtx]
+```
+### 2. Parallel Build
+To compile and run the GPU-accelerated implementation:
+```bash
+nvcc src/parallel.cu -o bin/parallel
+./bin/parallel [MatrixMarket.mtx]
+```
