@@ -38,7 +38,7 @@ The CUDA implementation demonstrates significant speedups, particularly for the 
 | **coPapersDBLP** | 14.10s (16.65s) | 0.9s (3.17s) | x5.25 | x15.67 |
 | **com-Orkut** | >12min | 107s (129s) | - | - |
 
-*Times formatted as: Calculation Time (Total Run Time).
+*Times formatted as: Calculation Time (Total Run Time).*
 
 ## How to Run
 
